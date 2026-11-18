@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package account;
+
+option java_package = "org.ngueoko.account.proto";
+option java_multiple_files = true;
+option java_outer_classname = "AccountProto";
+
+import "google/protobuf/timestamp.proto";
+
+// Représentation Protobuf de l'entité Java Account.
+// Les annotations JPA ne sont pas représentées dans un fichier .proto.
+message Account {
+  // UUID représenté sous forme de chaîne canonique.
+  string id = 1;
+  double balance = 2;
+
+  // LocalDateTime représenté ici par Timestamp.
+  google.protobuf.Timestamp created_at = 3;
+  google.protobuf.Timestamp updated_at = 4;
+
+  AccountType type = 5;
+  AccountStatus status = 6;
+  string currency = 7;
+
+  // UUID du client, représenté sous forme de chaîne.
+  optional string customer_id = 8;
+
+  // À compléter selon la définition réelle de AccountTransaction.
+  repeated AccountTransaction transactions = 9;
+}
+
+enum AccountType {
+  ACCOUNT_TYPE_UNSPECIFIED = 0;
+  ACCOUNT_TYPE_CURRENT = 1;
+  ACCOUNT_TYPE_SAVINGS = 2;
+}
+
+enum AccountStatus {
+  ACCOUNT_STATUS_UNSPECIFIED = 0;
+  ACCOUNT_STATUS_ACTIVE = 1;
+  ACCOUNT_STATUS_INACTIVE = 2;
+  ACCOUNT_STATUS_BLOCKED = 3;
+  ACCOUNT_STATUS_CLOSED = 4;
+}
+
+// Message provisoire : adaptez-le aux champs de votre entité AccountTransaction.
+message AccountTransaction {
+  string id = 1;
+}
